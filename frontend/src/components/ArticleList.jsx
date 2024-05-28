@@ -8,7 +8,7 @@ function ArticleList() {
   const dispatch = useDispatch();
   const articles = useSelector((state) => state.articles.articles);
   const [search, setSearch] = useState('');
-  const [startDate, setStartDate] = useState();
+  const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState('');
   const [sort, setSort] = useState("");
   console.log(sort);
@@ -21,9 +21,8 @@ function ArticleList() {
     if (search || startDate || endDate || sort) {
       dispatch(searchArticles({ search, startDate, endDate, sort }));
     }
-  }, [dispatch, search, startDate, endDate, sort]);
+  }, [dispatch, search, setSearch,startDate, endDate, sort]);
 
-  // Function to sort articles
   const sortedArticles = () => {
     if (sort === "asc") {
       return [...articles].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));

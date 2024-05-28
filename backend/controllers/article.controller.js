@@ -22,7 +22,7 @@ router.post("/create", async(req,res)=>{
 
 router.get("/get-articles", async(req,res)=>{
     try {
-        const articles = await Article.find({}).sort({createdAt: -1})
+        const articles = await Article.find({})
         return res.status(200).json({success: true, message: "article created successfully", articles})
 
     } catch (error) {
@@ -63,10 +63,9 @@ router.delete("/delete-article/:slug", async(req,res)=>{
 router.get("/search", async (req, res) => {
   const { search, startDate, endDate, sort } = req.query;
 
-  // Construct query object
   let query = {};
   if (search) {
-    query.title = { $regex: search, $options: "i" }; // Case-insensitive search
+    query.title = { $regex: search, $options: "i" }; h
   }
   if (startDate || endDate) {
     query.createdAt = {};
@@ -78,29 +77,22 @@ router.get("/search", async (req, res) => {
     }
   }
 
-  // Construct sort option
   let sortOption = {};
   if (sort === "asc") {
-    sortOption.createdAt = 1; // Ascending order
+    sortOption.createdAt = 1; 
   } else if (sort === "dsc") {
-    sortOption.createdAt = -1; // Descending order
+    sortOption.createdAt = -1; 
   }
 
   try {
-    // Fetch articles with the constructed query and sort options
     const articles = await Article.find(query)
       .sort(sortOption)
-      .select('title description category slug createdAt'); // Select only necessary fields
+      .select('title description category slug createdAt'); 
 
-    // Send response
     res.status(200).json({ success: true, articles });
   } catch (error) {
-    // Handle errors
     res.status(500).json({ success: false, message: error.message });
   }
 });
-
-  
-
 
 export default router
