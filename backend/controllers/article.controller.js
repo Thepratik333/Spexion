@@ -61,36 +61,45 @@ router.delete("/delete-article/:slug", async(req,res)=>{
 })
 
 router.get("/search", async (req, res) => {
-    const { search, startDate, endDate, sort } = req.query;
-  
-    let query = {};
-    if (search) {
-      query.title = { $regex: search, $options: "i" };
+  const { search, startDate, endDate, sort } = req.query;
+
+  // Construct query object
+  let query = {};
+  if (search) {
+    query.title = { $regex: search, $options: "i" }; // Case-insensitive search
+  }
+  if (startDate || endDate) {
+    query.createdAt = {};
+    if (startDate) {
+      query.createdAt.$gte = new Date(startDate);
     }
-    if (startDate || endDate) {
-      query.createdAt = {};
-      if (startDate) {
-        query.createdAt.$gte = new Date(startDate);
-      }
-      if (endDate) {
-        query.createdAt.$lte = new Date(endDate);
-      }
+    if (endDate) {
+      query.createdAt.$lte = new Date(endDate);
     }
-  
-    let sortOption = {};
-    if (sort === "asc") {
-      sortOption.createdAt = 1;
-    } else if (sort === "dsc") {
-      sortOption.createdAt = -1;
-    }
-  
-    try {
-      const articles = await Article.find(query).sort(sortOption);
-      res.status(200).json({ success: true, articles });
-    } catch (error) {
-      res.status(500).json({ success: false, message: error.message });
-    }
-  });
+  }
+
+  // Construct sort option
+  let sortOption = {};
+  if (sort === "asc") {
+    sortOption.createdAt = 1; // Ascending order
+  } else if (sort === "dsc") {
+    sortOption.createdAt = -1; // Descending order
+  }
+
+  try {
+    // Fetch articles with the constructed query and sort options
+    const articles = await Article.find(query)
+      .sort(sortOption)
+      .select('title description category slug createdAt'); // Select only necessary fields
+
+    // Send response
+    res.status(200).json({ success: true, articles });
+  } catch (error) {
+    // Handle errors
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
   
 
 

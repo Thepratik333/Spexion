@@ -8,16 +8,31 @@ function ArticleList() {
   const dispatch = useDispatch();
   const articles = useSelector((state) => state.articles.articles);
   const [search, setSearch] = useState('');
-  const [startDate, setStartDate] = useState(null);
+  const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState('');
   const [sort, setSort] = useState("");
   console.log(sort);
 
   useEffect(() => {
     dispatch(fetchArticles());
+  }, [dispatch]);
 
-    dispatch(searchArticles({ search, startDate, endDate, sort }));
-  }, [dispatch, search, startDate, endDate, sort,setSort, setEndDate, setStartDate]);
+  useEffect(() => {
+    if (search || startDate || endDate || sort) {
+      dispatch(searchArticles({ search, startDate, endDate, sort }));
+    }
+  }, [dispatch, search, startDate, endDate, sort]);
+
+  // Function to sort articles
+  const sortedArticles = () => {
+    if (sort === "asc") {
+      return [...articles].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    } else if (sort === "dsc") {
+      return [...articles].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    } else {
+      return articles;
+    }
+  };
 
   return (
     <div className="searchContainer min-h-[66.8vh] flex">
@@ -50,7 +65,7 @@ function ArticleList() {
         </div>
       </aside>
 
-      <main className="p-2 px-3 rounded-lg shadow-md min-h-[87vh] my-4 w-full">
+      <main className="p-2 px-3 rounded-lg shadow-md min-h-[87vh] bg-[#f5f5f5] my-4 w-full">
         <h1 className="py-2">PRODUCTS</h1>
         <div className="flex items-center border border-gray-300 rounded-md p-1">
           <div className="text-gray-400">
@@ -59,13 +74,13 @@ function ArticleList() {
           <input
             type="text"
             placeholder="search by name ..."
-            className="w-full outline-none p-[5px] mr-[20px] rounded-lg"
+            className="w-full bg-transparent outline-none p-[5px] mr-[20px] rounded-lg"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {articles && articles.map((article,index) => (
+          {sortedArticles().map((article, index) => (
             <ArticleBox
               key={index}
               title={article.title}

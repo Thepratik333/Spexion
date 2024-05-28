@@ -8,17 +8,17 @@ const Navbar = () => {
         <nav className="bg-gray-800 py-4">
             <div className="container mx-auto flex justify-between items-center">
 
-                <Link to="/" className="text-white text-2xl font-bold">
+                <Link to="/" className="text-white ml-4 text-2xl font-bold">
                     Article Hub
                 </Link>
 
                 {
                     articlePath ? (
                       
-                        <Link to="/" className="bg-gray-700 text-white py-2 px-4 rounded-lg">
+                        <Link to="/" className="bg-gray-700 mr-4 text-white py-2 px-4 rounded-lg">
                         Add Article
                     </Link>
-                    ) :  <Link to="/articles" className="bg-gray-700 text-white py-2 px-4 rounded-lg">
+                    ) :  <Link to="/articles" className="bg-gray-700 mr-4 text-white py-2 px-4 rounded-lg">
                     Articles
                 </Link>
                 }

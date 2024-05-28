@@ -5,6 +5,8 @@ const EditArticleModal = ({ article }) => {
   const [showModal, setShowModal] = useState(false);
   const [editedArticle, setEditedArticle] = useState({ ...article });
 
+  const categories = ["Food", "Educations", "Businessmen", "Positions"];
+
   const handleChange = (e) => {
     setEditedArticle({ ...editedArticle, [e.target.name]: e.target.value });
   };
@@ -17,6 +19,9 @@ const EditArticleModal = ({ article }) => {
 
   return (
     <>
+      <button onClick={() => setShowModal(true)} className="text-blue-600 hover:text-blue-900">
+        <HiOutlinePencilAlt className="h-5 w-5" aria-hidden="true" />
+      </button>
       {showModal && (
         <div className="fixed z-10 inset-0 overflow-y-auto">
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -36,6 +41,17 @@ const EditArticleModal = ({ article }) => {
                   <div className="mt-4">
                     <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">Description</label>
                     <textarea id="description" name="description" value={editedArticle.description} onChange={handleChange} className="form-textarea rounded-md shadow-sm block w-full" rows="4"></textarea>
+                  </div>
+                  <div className="mt-4">
+                    <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <select id="category" name="category" value={editedArticle.category} onChange={handleChange} className="form-select rounded-md shadow-sm block w-full">
+                      <option value="" disabled>Select category</option>
+                      {categories.map((category) => (
+                        <option key={category} value={category}>
+                          {category}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
