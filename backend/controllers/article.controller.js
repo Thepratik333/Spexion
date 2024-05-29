@@ -65,7 +65,7 @@ router.get("/search", async (req, res) => {
 
   let query = {};
   if (search) {
-    query.title = { $regex: search, $options: "i" }; h
+    query.title = { $regex: search, $options: "i" };
   }
   if (startDate || endDate) {
     query.createdAt = {};

@@ -23,15 +23,15 @@ function ArticleList() {
     }
   }, [dispatch, search, setSearch,startDate, endDate, sort]);
 
-  const sortedArticles = () => {
-    if (sort === "asc") {
-      return [...articles].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-    } else if (sort === "dsc") {
-      return [...articles].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    } else {
-      return articles;
-    }
-  };
+  // const sortedArticles = () => {
+  //   if (sort === "asc") {
+  //     return [...articles].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+  //   } else if (sort === "dsc") {
+  //     return [...articles].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  //   } else {
+  //     return articles;
+  //   }
+  // };
 
   return (
     <div className="searchContainer min-h-[66.8vh] flex">
@@ -79,7 +79,7 @@ function ArticleList() {
           />
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {sortedArticles().map((article, index) => (
+          {articles && articles.map((article, index) => (
             <ArticleBox
               key={index}
               title={article.title}
