@@ -1,24 +1,26 @@
 import mongoose, { Schema } from "mongoose";
 
-const articleSchema = new Schema({
+const postSchema = new Schema({
     title: {
         type: String,
         required: true
     },
-    description: {
+    content: {
         type: String,
         required: true
     },
-    category: {
+    author: {
         type: String,
-        enum: ['Food', 'Educations', 'Businessmen', 'Positions'],
         required: true
     },
-    slug: {
+    image: {
         type: String,
-        required: true,
-        unique: true
+        required: false
+    },
+    addedBy:{
+        type: Schema.Types.ObjectId,
+        ref: "User",
     }
 },{timestamps: true})
 
-export const Article = mongoose.model("Article", articleSchema)
+export const Post = mongoose.model("Post", postSchema)
