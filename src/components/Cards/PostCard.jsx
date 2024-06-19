@@ -4,7 +4,7 @@ const PostCard = ({ image, title, description, author }) => {
     const src = `http://localhost:5001/uploads/${image}`;
 
     return (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-white rounded-lg m-5 md:m-0 shadow-md overflow-hidden">
             <img src={src} alt={title} className="w-full h-48 object-cover" />
             <div className="p-6">
                 <div className="flex justify-between items-center mb-4">

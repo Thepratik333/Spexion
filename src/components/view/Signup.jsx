@@ -38,8 +38,8 @@ const Signup = () => {
 
   return (
     <div className='login-container flex justify-center items-center min-h-[43.5rem] bg-white'>
-    <img src={SignupImage} className="h-[30rem]" alt="loginImage" />
-      <div className="login-box bg-white ml-40 rounded-lg shadow-lg p-8 max-w-md w-full text-center">
+    <img src={SignupImage} className="h-[30rem] md:block hidden" alt="loginImage" />
+      <div className="login-box bg-white md:ml-40 rounded-lg shadow-lg p-8 max-w-md w-full text-center">
         <form className="login-form flex flex-col" onSubmit={handleSubmit}>
           <h1 className="text-2xl font-semibold mb-4 text-gray-800">Welcome</h1>
           <p className="text-gray-600 mb-6">Please Signup to your account</p>
